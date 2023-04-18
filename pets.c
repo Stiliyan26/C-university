@@ -66,8 +66,73 @@ void printPets(float price)
     FILE* fp;
     unsigned len;
     Pet pet;
-    bool isFirst;
+    bool isFirst = true;
 
+    if ((fp = fopen("C:/BPE/lab/animalBin.bin", "rb")) == NULL)
+    {
+        perror("Open Bin error: ");
+        exit(4);
+    }
+
+    while (true)
+    {
+        if (fread(&len, sizeof(unsigned), 1, fp) != 1)
+        {
+            if (!feof(fp))
+            {
+                perror("Reading bin error: ");
+                fclose(fp);
+                exit(10);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (fread(&pet.name, sizeof(char), len, fp) != len)
+        {
+            perror("Reading bin error: ");
+            fclose(fp);
+            exit(11);
+        }
+
+        pet.name[len] = '\0';
+
+        if (fread(&pet.chip, sizeof(char), CH_LEN - 1, fp) != CH_LEN - 1)
+        {
+            perror("Reading bin error: ");
+            fclose(fp);
+            exit(11);
+        }
+
+        pet.chip[CH_LEN - 1] = '\0';
+
+        if (fread(&pet.price, sizeof(float), 1, fp) != 1)
+        {
+            perror("Reading bin error: ");
+            fclose(fp);
+            exit(12);
+        }
+
+        if (pet.price >= price)
+        {
+            if (isFirst)
+            {
+                isFirst = false;
+            }
+            else 
+            {
+                puts("----------");
+            }
+
+            printf("Bin Owner Name: %s\n", pet.name);
+            printf("Bin Chip: %s\n", pet.chip);
+            printf("Bin Price: %.2f\n", pet.price);
+        }
+    }
+
+    fclose(fp);
 }
 
 void main()
@@ -83,7 +148,7 @@ void main()
     printPetByPrice(pets, SIZE, 22.22);
     writeToBin(pets, SIZE);
 
-    printPets(25);
+    printPets(15);
 }
 
 void writeToBin(Pet pets[], unsigned len)
