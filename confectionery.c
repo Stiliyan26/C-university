@@ -17,7 +17,7 @@ typedef struct
     int numberOfProduct;
 } Order;
 
-Product* removeOrder(Product* products, int size, int index);
+Product* removeProduct(Product* products, int size, int index);
 
 void main()
 {
@@ -66,7 +66,7 @@ void main()
                 if (products[i].uniqueProductNumber == currentOrder.numberOfProduct)
                 {
                     Product product = products[i];
-                    products = removeOrder(products, size, i);
+                    products = removeProduct(products, size, i);
                     printf("Client %s ordered %s\n", currentOrder.address , product.productName);
 
                     sizeArr--;
@@ -88,7 +88,7 @@ void main()
     }
 }
 
-  Product* removeOrder(Product* products, int size, int index)
+  Product* removeProduct(Product* products, int size, int index)
     {
         Product* newPorducts = (Product*)malloc(size * sizeof(Product));
 
