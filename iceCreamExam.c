@@ -229,7 +229,7 @@ float TotalPrice(IceCream* creams, int n, char letter)
     {
         if (creams[i].name[0] == letter)
         {
-            totalPrice += creams[i].price;
+            totalPrice += creams[i].price * creams[i].weight;
             counter++;
         }
     }
