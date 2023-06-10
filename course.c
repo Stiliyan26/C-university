@@ -178,49 +178,49 @@ Course* RemoveCourseByNameAndDate(Course* courses, int n, char name[], char date
 //Not mandatory for the exam!!!!
 void WriteInBin()
 {
-    FILE* fp = fopen("C:/GitHub/C-university/courses.bin", "wb");
-    
-    if (fp == NULL)
-    {
-        perror("Error opening bin!");
-        exit(1);
-    }
-
-    int n;
-
-    printf("Enter number of courses: ");
-    scanf("%d", &n);
-    fflush(stdin);
-
-    Course* courses = (Course*)malloc(n * sizeof(Course));
-
-    fwrite(&n, sizeof(int), 1, fp);
-
-    for (int i = 0; i < n; i++)
-    {
-        printf("Name: ");
-        fgets(courses[i].name, LEN, stdin);
-        fflush(stdin);
-        courses[i].name[strlen(courses[i].name) - 1] = '\0';
-
-        printf("Date: ");
-        fgets(courses[i].date, D_LEN, stdin);
-        fflush(stdin);
-
-        printf("Lectures: ");
-        scanf("%d", &courses[i].lectures);
-        fflush(stdin);
-
-        printf("Price: ");
-        scanf("%f", &courses[i].price);
-        fflush(stdin);
-
-        if (fwrite(&courses[i], sizeof(Course), 1, fp) != 1)
+        FILE* fp = fopen("C:/GitHub/C-university/courses.bin", "wb");
+        
+        if (fp == NULL)
         {
-            perror("Error writing in file!");
+            perror("Error opening bin!");
             exit(1);
         }
-    }
-    
-    fclose(fp);
+
+        int n;
+
+        printf("Enter number of courses: ");
+        scanf("%d", &n);
+        fflush(stdin);
+
+        Course* courses = (Course*)malloc(n * sizeof(Course));
+
+        fwrite(&n, sizeof(int), 1, fp);
+
+        for (int i = 0; i < n; i++)
+        {
+            printf("Name: ");
+            fgets(courses[i].name, LEN, stdin);
+            fflush(stdin);
+            courses[i].name[strlen(courses[i].name) - 1] = '\0';
+
+            printf("Date: ");
+            fgets(courses[i].date, D_LEN, stdin);
+            fflush(stdin);
+
+            printf("Lectures: ");
+            scanf("%d", &courses[i].lectures);
+            fflush(stdin);
+
+            printf("Price: ");
+            scanf("%f", &courses[i].price);
+            fflush(stdin);
+
+            if (fwrite(&courses[i], sizeof(Course), 1, fp) != 1)
+            {
+                perror("Error writing in file!");
+                exit(1);
+            }
+        }
+        
+        fclose(fp);
 }
